@@ -1,1 +1,1 @@
-# JS-Advanced-September-2019
+# SoftUni-JS-Advanced-September-2019
