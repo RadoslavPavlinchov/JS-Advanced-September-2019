@@ -1,0 +1,10 @@
+function sumOfNumbersNToM(...params) {
+    let a = Number(params[0]);
+    let b = Number(params[1]);
+    let sum = 0;
+    for (let i = a; i <= b; i++) {
+        sum += i;
+    }
+    return sum;
+}
+console.log(sumOfNumbersNToM("1", "5"));
