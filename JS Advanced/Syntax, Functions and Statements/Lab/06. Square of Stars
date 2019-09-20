@@ -1,0 +1,14 @@
+function squareOfStars(params) {
+    let output = [];
+    if (params !== undefined) {
+        for (let i = 0; i < params; i++) {
+            output.push("*".repeat(params).split("").join(" "));
+        }
+    } else {
+        for (let i = 0; i < 5; i++) {
+            output.push("*".repeat(5).split("").join(" "));
+        }
+    }
+    return output.join("\n");
+}
+console.log(squareOfStars(6));
