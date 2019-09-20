@@ -1,0 +1,8 @@
+function sameNumbers(params) {
+    let a = Number(params.toString().split("")[0]);
+    params = params.toString().split("").map(Number);
+    let filtered = params.map(Number).filter(e => e !== Number(a)).join("");
+    return filtered ? console.log('false') : console.log('true'),
+    params.reduce((a, b) => a + b, 0);
+}
+console.log(sameNumbers(1234));
