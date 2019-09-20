@@ -1,0 +1,6 @@
+function wordsUppercase(params) {
+    let pattern = /\w+/gim;
+    let output = params.match(pattern);
+    return output.join(", ").toUpperCase();
+}
+console.log(wordsUppercase('hello'));
