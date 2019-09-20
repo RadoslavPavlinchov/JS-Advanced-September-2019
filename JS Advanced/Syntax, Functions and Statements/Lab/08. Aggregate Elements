@@ -1,0 +1,11 @@
+function aggregateElements(params) {
+    let add = (a, b) => a + b;
+    let addInverse = (a, b) => a + (1 / b);
+    let concat = (a, b) => a + b.toString();
+    return [
+        params.reduce(add, 0),
+        params.reduce(addInverse, 0),
+        params.reduce(concat, "")
+    ].join("\n");
+}
+console.log(aggregateElements([1, 2, 3]));
