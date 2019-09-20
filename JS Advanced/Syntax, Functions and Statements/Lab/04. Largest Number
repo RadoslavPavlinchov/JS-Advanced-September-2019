@@ -1,0 +1,4 @@
+function largestNumber(...params) {
+    return `The largest number is ${Math.max(...params)}.`;
+}
+console.log(largestNumber(5, -3, 16));
