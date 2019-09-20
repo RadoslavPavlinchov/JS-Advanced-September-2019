@@ -1,0 +1,11 @@
+function calorieObject(params) {
+    let obj = {};
+    for (let i = 0; i < params.length; i += 2) {
+        let food = params[i];
+        let calories = params[i + 1];
+        obj[food] = Number(calories);
+    }
+    return obj;
+}
+console.log(calorieObject(['Yoghurt', 48, 'Rise', 138, 'Apple', 52]));
+console.log(calorieObject(['Potato', 93, 'Skyr', 63,'Cucumber', 18, 'Milk', 42]));
