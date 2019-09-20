@@ -1,0 +1,11 @@
+function circleArea(param) {
+    let area = 0;
+    let type = typeof param;
+    if (type === "number") {
+        area = (Math.PI * Math.pow(param, 2)).toFixed(2);
+    } else {
+        area = `We can not calculate the circle area, because we receive a ${type}.`;
+    }
+    return area;
+}
+console.log(circleArea('5'));
