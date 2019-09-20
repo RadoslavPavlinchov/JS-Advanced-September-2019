@@ -1,0 +1,10 @@
+function timeToWalk(steps, footsteps, speed) {
+    let distanceInMeters = steps * footsteps;
+    let time = Math.ceil(distanceInMeters / (speed * 5 / 18) + Math.floor(distanceInMeters / 500) * 60);
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time - hours * 3600) / 60);
+    let seconds = time - hours * 3600 - minutes * 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+console.log(timeToWalk(4000, 0.60, 5));
+console.log(timeToWalk(2564, 0.70, 5.5));
