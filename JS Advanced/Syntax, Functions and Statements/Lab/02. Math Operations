@@ -1,0 +1,13 @@
+function solve(...params) {
+    let a = params[0];
+    let b = params[1];
+    let operations = {
+        "+": a + b,
+        "-": a - b,
+        "*": a * b,
+        "/": a / b,
+        "%": a % b,
+        "**": a ** b
+    }
+    return `${operations[params[2]]}`;
+}
