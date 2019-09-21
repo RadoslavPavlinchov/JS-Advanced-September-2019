@@ -1,0 +1,20 @@
+function solve(params) {
+    let [x1, y1, x2, y2] = params;
+
+    function distance(x1, y1, x2, y2) {
+        let distX = x1 - x2;
+        let distY = y1 - y2;
+        return Math.sqrt(distX ** 2 + distY ** 2);
+    }
+
+    const a = Number.isInteger(distance(x1, y1, 0, 0));
+    const b = Number.isInteger(distance(x2, y2, 0, 0));
+    const c = Number.isInteger(distance(x1, y1, x2, y2));
+
+    return [a ? console.log(`{${x1}, ${y1}} to {0, 0} is valid`) : console.log(`{${x1}, ${y1}} to {0, 0} is invalid`),
+        b ? console.log(`{${x2}, ${y2}} to {0, 0} is valid`) : console.log(`{${x2}, ${y2}} to {0, 0} is invalid`),
+        c ? console.log(`{${x1}, ${y1}} to {${x2}, ${y2}} is valid`) : console.log(`{${x1}, ${y1}} to {${x2}, ${y2}} is invalid`)
+    ].join("\n");
+}
+solve([3, 0, 0, 4]);
+solve([2, 1, 1, 1]);
