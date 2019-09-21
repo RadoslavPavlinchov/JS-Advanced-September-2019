@@ -1,0 +1,31 @@
+function roadRadar(params) {
+    let [speed, area] = params;
+    let limits = {
+        "residential": 20,
+        "city": 50,
+        "interstate": 90,
+        "motorway": 130
+    };
+    function speedAlert(value) {
+        if (value - limits[area] <= 0) {
+            return '';
+        }
+        if ((value - limits[area]) <= 20) {
+            return 'speeding';
+        } else if (((value - limits[area]) <= 40)) {
+            return 'excessive speeding';
+        }
+        return 'reckless driving';
+    }
+    const output = {
+        motorway: speedAlert(speed),
+        interstate: speedAlert(speed),
+        city: speedAlert(speed),
+        residential: speedAlert(speed),
+    };
+    return output[area];
+}
+console.log(roadRadar([21, 'residential']));
+console.log(roadRadar([40, 'city']));
+console.log(roadRadar([120, 'interstate']));
+console.log(roadRadar([200, 'motorway']));
