@@ -1,0 +1,42 @@
+function coffeeMachine(params) {
+    let sum = 0;
+    let total = 0;
+    const percents = (x) => x * 0.1;
+
+    let prices = {
+        "coffee caffeine": 0.80,
+        "coffee decaf": 0.90,
+        "tea": 0.80
+    };
+    for (let line of params) {
+        line = line.split(", ");
+        let [coins, drink, type] = line;
+        let sugar = Number(line.slice(-1));
+        coins = Number(coins);
+        let whole = drink;
+        if (drink === 'coffee') {
+            whole = `${drink} ${type}`;
+        }
+
+        let pricePerMilk = 0;
+        if (line.includes("milk")) {
+            pricePerMilk = Number(percents(prices[whole]).toFixed(1));
+        }
+
+        if (sugar > 0) {
+            sugar = 0.1;
+        }
+
+        sum = prices[whole] + pricePerMilk + sugar;
+        let change = Math.abs(sum - coins);
+        console.log((sum <= coins) ? `You ordered ${drink}. Price: $${sum.toFixed(2)} Change: $${change.toFixed(2)}`:
+            `Not enough money for ${drink}. Need $${change.toFixed(2)} more.`);
+
+            if (sum <= coins) {
+                total += sum;
+            }
+            sum = 0;
+    }
+    return `Income Report: $${total.toFixed(2)}`;
+}
+console.log(coffeeMachine(['1.00, coffee, caffeine, milk, 4', '0.40, tea, milk, 2', '1.00, coffee, decaf, 0']));
