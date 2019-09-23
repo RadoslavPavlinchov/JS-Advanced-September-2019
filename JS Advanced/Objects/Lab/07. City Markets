@@ -1,0 +1,35 @@
+function cityMarkets(params) {
+    let towns = {};
+    let output = "";
+    for (let line of params) {
+        let [town, product, quantityAndPrice] = line.split(" -> ");
+        let [quantity, price] = quantityAndPrice.split(" : ");
+        let sales = Number(quantity) * Number(price);
+        if (!towns.hasOwnProperty(town)) {
+            towns[town] = {};
+            towns[town][product] = sales;
+        } else {
+            if (!towns[town].hasOwnProperty(product)) {
+                towns[town][product] = sales;
+            } else {
+                towns[town][product] += sales;
+            }
+        }
+    }
+    for (let key of Object.entries(towns)) {
+        output += `Town - ${key[0]}\n`;
+
+        for (let e in key[1]) {
+            output += `$$$${e} : ${key[1][e]}\n`;
+        }
+
+    }
+    return output;
+}
+console.log(cityMarkets(['Sofia -> Laptops HP -> 200 : 2000',
+    'Sofia -> Raspberry -> 200000 : 1500',
+    'Sofia -> Audi Q7 -> 200 : 100000',
+    'Montana -> Portokals -> 200000 : 1',
+    'Montana -> Qgodas -> 20000 : 0.2',
+    'Montana -> Chereshas -> 1000 : 0.3'
+]));
