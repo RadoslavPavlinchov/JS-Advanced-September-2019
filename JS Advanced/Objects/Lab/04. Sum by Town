@@ -1,0 +1,19 @@
+function sumByTown(params) {
+    let obj = {};
+    for (let i = 0; i < params.length; i+=2) {
+        if (!obj.hasOwnProperty(params[i])) {
+            obj[params[i]] = +params[i + 1];
+        } else {
+            obj[params[i]] += +params[i + 1];
+        }
+    }
+    return JSON.stringify(obj);
+}
+console.log(sumByTown(['Sofia',
+'20',
+'Varna',
+'3',
+'Sofia',
+'5',
+'Varna',
+'4']));
