@@ -1,0 +1,19 @@
+function scoreToHTML(input) {
+    let output = '';
+    const array = JSON.parse(input);
+    const keys = Object.keys(array[0]);
+    output += `<table>\n   <tr><th>${keys[0]}</th><th>${keys[1]}</th></tr>\n`;
+    for (const element of array) {
+        let x = element.name
+            .replace(/&/gim, '&amp;')
+            .replace(/>/gim, '&gt;')
+            .replace(/</gim, '&lt;')
+            .replace(/'/gim, '&#39;')
+            .replace(/"/gim, '&quot;');
+        output += `   <tr><td>${x}</td><td>${element.score}</td></tr>\n`;
+    }
+    return output += '</table>';
+}
+//console.log(scoreToHTML(['[{"name":"Pesho","score":479},{"name":"Gosho","score":205}]']));
+//console.log(scoreToHTML(['[{"name":"Pesho & Kiro","score":479},{"name":"Gosho, Maria & Viki","score":205}]']));
+console.log(scoreToHTML(['[{"name":"Pencho Penchev","score":0},{"name":"<script>alert(\\"Wrong!\\")</script>","score":1}]']));
