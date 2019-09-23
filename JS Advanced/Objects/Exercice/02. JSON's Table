@@ -1,0 +1,11 @@
+function JSONTable(params) {
+    let output = `<table>\n`;
+    for (const e of params) {
+        let obj = JSON.parse(e);
+        output += `\t<tr>\n\t\t<td>${obj.name}</td>\n\t\t<td>${obj.position}</td>\n\t\t<td>${obj.salary}</td>\n\t</tr>\n`;
+    }
+    return output += `</table>\n`;
+}
+console.log(JSONTable(['{"name":"Pesho","position":"Promenliva","salary":100000}',
+    '{"name":"Teo","position":"Lecturer","salary":1000}',
+    '{"name":"Georgi","position":"Lecturer","salary":1000}']));
