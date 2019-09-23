@@ -1,0 +1,43 @@
+function cappyJuice(params) {
+    let bottles = {};
+    let ml = {};
+
+    for (const line of params) {
+        let [juice, quantity] = line.split(" => ");
+        quantity = Number(quantity);
+        let b = 0;
+
+        if (quantity >= 1000) {
+            b = Math.trunc(quantity / 1000);
+            quantity = quantity - (b * 1000);
+        }
+
+        if (!ml.hasOwnProperty(juice)) {
+            ml[juice] = quantity;
+        } else {
+            ml[juice] += quantity;
+            
+            if (!bottles.hasOwnProperty(juice)) {
+                bottles[juice] = b;
+
+            } else {
+                bottles[juice] += b;
+            }
+
+            if (ml[juice] >= 1000) {
+                b = Math.trunc(ml[juice] / 1000);
+                quantity = ml[juice] - (b * 1000);
+                ml[juice] = quantity;
+                bottles[juice] += b;
+            }
+        }
+        if (!bottles.hasOwnProperty(juice)) {
+            if (b > 0) {
+                bottles[juice] = b;
+            }
+        }
+    }
+    for (const e in bottles) {
+        console.log(`${e} => ${bottles[e]}`);
+    }
+}
