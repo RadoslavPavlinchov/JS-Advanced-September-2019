@@ -1,0 +1,16 @@
+function countWordsInAText(params) {
+    let obj = {};
+        line = params
+        .shift()
+        .match(/\w+/gmi)
+        .forEach((e) => {
+            if (!obj.hasOwnProperty(e)) {
+                obj[e] = 1;
+            } else {
+                obj[e]++;
+            }
+        });
+    return JSON.stringify(obj);
+}
+console.log(countWordsInAText(["Far too slow, you're far too slow."]));
+console.log(countWordsInAText(["JS devs use Node.js for server-side JS.-- JS for devs"]));
