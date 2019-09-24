@@ -1,0 +1,39 @@
+function storeCatalogue(params) {
+    let products = {};
+    let output = "";
+
+    for (const line of params) {
+        let [name, price] = line.split(" : ");
+        products[name] = price;
+    }
+    let arr = Object.entries(products);
+    let firstLetters = [];
+
+    for (const words of arr) {
+        char = words[0][0];
+        
+        if (!firstLetters.includes(char)) {
+            firstLetters.push(char);
+        }
+    }
+    firstLetters.sort((a, b) => a[0].localeCompare(b[0]));
+    arr.sort((a, b) => a[0].localeCompare(b[0]));
+    
+    for (const l of firstLetters) {
+        output += `${l}\n`;
+        arr.forEach(e => {
+            if (e[0][0] === l) {
+                output += ` ${e[0]}: ${e[1]}\n`;
+            }
+        });
+    }
+    return output;
+}
+console.log(storeCatalogue(['Appricot : 20.4',
+    'Fridge : 1500',
+    'TV : 1499',
+    'Deodorant : 10',
+    'Boiler : 300', 'Apple : 1.25',
+    'Anti-Bug Spray : 15',
+    'T-Shirt : 10'
+]));
