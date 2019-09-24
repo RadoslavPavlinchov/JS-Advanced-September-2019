@@ -1,0 +1,44 @@
+function autoEngineeringCompany(params) {
+    let cars = {};
+    let output = "";
+
+    params
+        .forEach(e => {
+            let [brand, model, count] = e.split(" | ");
+            count = Number(count);
+
+            if (!cars[brand]) {
+                cars[brand] = {
+                    [model]: count
+                };
+            } else {
+                if (!cars[brand][model]) {
+                    cars[brand][model] = count;
+                } else {
+                    cars[brand][model] += count;
+                }
+            }
+        });
+        
+    let arrCars = Object.entries(cars);
+    arrCars
+        .forEach(e => {
+            output += `${e[0]}\n`;
+            for (const i in e[1]) {
+                output += `###${i} -> ${e[1][i]}\n`;
+            }
+        });
+
+    return output;
+}
+console.log(autoEngineeringCompany(["Audi | Q7 | 1000",
+    "Audi | Q6 | 100",
+    "BMW | X5 | 1000",
+    "BMW | X6 | 100",
+    "Citroen | C4 | 123",
+    "Volga | GAZ-24 | 1000000",
+    "Lada | Niva | 1000000",
+    "Lada | Jigula | 1000000",
+    "Citroen | C4 | 22",
+    "Citroen | C5 | 10"
+]));
