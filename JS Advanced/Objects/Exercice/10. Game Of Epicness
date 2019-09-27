@@ -2,32 +2,38 @@ function gameOfEpicness(inputKingdoms, inputBattles) {
     let kingdoms = {};
     let output = "";
     for (const token of inputKingdoms) {
-       let kingdom = token.kingdom;
-       let general = token.general;
-       let army = token.army;
-       if (!kingdoms[kingdom]) {
-        kingdoms[kingdom] = { [ general ]: { army } };
-        kingdoms[kingdom][general].wins = 0;
-        kingdoms[kingdom][general].losses = 0;
-       } else {
-           if (!kingdoms[kingdom][general]) {
-            kingdoms[kingdom][general] = { army } ;
-            kingdoms[kingdom][general ].wins = 0;
+        let kingdom = token.kingdom;
+        let general = token.general;
+        let army = token.army;
+        if (!kingdoms[kingdom]) {
+            kingdoms[kingdom] = {
+                [general]: {
+                    army
+                }
+            };
+            kingdoms[kingdom][general].wins = 0;
             kingdoms[kingdom][general].losses = 0;
-           } else {
-            kingdoms[kingdom][general].army += army;
-           }
-       }
+        } else {
+            if (!kingdoms[kingdom][general]) {
+                kingdoms[kingdom][general] = {
+                    army
+                };
+                kingdoms[kingdom][general].wins = 0;
+                kingdoms[kingdom][general].losses = 0;
+            } else {
+                kingdoms[kingdom][general].army += army;
+            }
+        }
     }
     for (const line of inputBattles) {
-        let [attackKingdom, attackGeneral, defendKingdom, defendGeneral,] = line.join(", ").split(", ");
+        let [attackKingdom, attackGeneral, defendKingdom, defendGeneral, ] = line.join(", ").split(", ");
         if (attackKingdom !== defendKingdom) {
             if (kingdoms[attackKingdom][attackGeneral].army > kingdoms[defendKingdom][defendGeneral].army) {
                 kingdoms[attackKingdom][attackGeneral].army = parseInt(kingdoms[attackKingdom][attackGeneral].army * 1.1);
                 kingdoms[defendKingdom][defendGeneral].army = parseInt(kingdoms[defendKingdom][defendGeneral].army * 0.9);
                 kingdoms[attackKingdom][attackGeneral].wins++;
                 kingdoms[defendKingdom][defendGeneral].losses++;
-            } else {
+            } else if (kingdoms[attackKingdom][attackGeneral].army < kingdoms[defendKingdom][defendGeneral].army){
                 kingdoms[attackKingdom][attackGeneral].army = parseInt(kingdoms[attackKingdom][attackGeneral].army * 0.9);
                 kingdoms[defendKingdom][defendGeneral].army = parseInt(kingdoms[defendKingdom][defendGeneral].army * 1.1);
                 kingdoms[defendKingdom][defendGeneral].wins++;
@@ -41,36 +47,79 @@ function gameOfEpicness(inputKingdoms, inputBattles) {
         for (const i in kingdoms[e]) {
             totalWins += kingdoms[e][i].wins;
             totalLosses += kingdoms[e][i].losses;
-        } 
+        }
         kingdoms[e].totalWins = totalWins;
         kingdoms[e].totalLosses = totalLosses;
     }
 
     let arr = Object.entries(kingdoms)
-    .sort((a, b) => b[1].totalWins - a[1].totalWins);
+        .sort((a, b) => b[1].totalWins - a[1].totalWins || a[1].totalLosses - b[1].totalLosses || a[0].localeCompare(b[0]));
 
     let winner = arr[0];
-
-  
-        console.log(output += `Winner: ${winner[0]}\n/\\general: ${winner[1]}\n---army: ${winner[1].army}\n---wins: ${winner[1].wins}\n---losses: ${winner[1].losses}`);
-    
-    // winner
-    // // .forEach(e => {
-    // //     output += `Winner: ${winner[0]}\n/\\general: ${winner[1]}\n---army: ${winner[1].army}\n---wins: ${winner[1].wins}\n---losses: ${winner[1].losses}`;
-    // // });
-    // // console.log(output);
+    output += `Winner: ${winner[0]}\n`;
+    let arr1 = Object.entries(winner[1])
+        .sort((a, b) => b[1].army - a[1].army);
+    for (let i = 0; i < arr1.length - 2; i++) {
+        output += `/\\general: ${arr1[i][0]}\n---army: ${arr1[i][1].army}\n---wins: ${arr1[i][1].wins}\n---losses: ${arr1[i][1].losses}\n`;
+    }
+    return output;
 }
-console.log(gameOfEpicness([
-    { kingdom: 'Maiden Way', general: 'Merek', army: 5000 },
-    { kingdom: 'Stonegate', general: 'Ulric', army: 4900 },
-    { kingdom: 'Stonegate', general: 'Doran', army: 70000 },
-    { kingdom: 'YorkenShire', general: 'Quinn', army: 0 },
-    { kingdom: 'YorkenShire', general: 'Quinn', army: 2000 },
-    { kingdom: 'Maiden Way', general: 'Berinon', army: 100000 }
-  ], [
-    [ 'YorkenShire', 'Quinn', 'Stonegate', 'Ulric' ],
-    [ 'Stonegate', 'Ulric', 'Stonegate', 'Doran' ],
-    [ 'Stonegate', 'Doran', 'Maiden Way', 'Merek' ],
-    [ 'Stonegate', 'Ulric', 'Maiden Way', 'Merek' ],
-    [ 'Maiden Way', 'Berinon', 'Stonegate', 'Ulric' ]
-  ]));
+// console.log(gameOfEpicness([{
+//         kingdom: 'Maiden Way',
+//         general: 'Merek',
+//         army: 5000
+//     },
+//     {
+//         kingdom: 'Stonegate',
+//         general: 'Ulric',
+//         army: 4900
+//     },
+//     {
+//         kingdom: 'Stonegate',
+//         general: 'Doran',
+//         army: 70000
+//     },
+//     {
+//         kingdom: 'YorkenShire',
+//         general: 'Quinn',
+//         army: 0
+//     },
+//     {
+//         kingdom: 'YorkenShire',
+//         general: 'Quinn',
+//         army: 2000
+//     },
+//     {
+//         kingdom: 'Maiden Way',
+//         general: 'Berinon',
+//         army: 100000
+//     }
+// ], [
+//     ['YorkenShire', 'Quinn', 'Stonegate', 'Ulric'],
+//     ['Stonegate', 'Ulric', 'Stonegate', 'Doran'],
+//     ['Stonegate', 'Doran', 'Maiden Way', 'Merek'],
+//     ['Stonegate', 'Ulric', 'Maiden Way', 'Merek'],
+//     ['Maiden Way', 'Berinon', 'Stonegate', 'Ulric']
+// ]));
+console.log(gameOfEpicness(
+    [{
+            kingdom: "Stonegate",
+            general: "Ulric",
+            army: 5000
+        },
+        {
+            kingdom: "YorkenShire",
+            general: "Quinn",
+            army: 5000
+        },
+        {
+            kingdom: "Maiden Way",
+            general: "Berinon",
+            army: 1000
+        }
+    ],
+    [
+        ["YorkenShire", "Quinn", "Stonegate", "Ulric"],
+        ["Maiden Way", "Berinon", "YorkenShire", "Quinn"]
+    ]
+));
