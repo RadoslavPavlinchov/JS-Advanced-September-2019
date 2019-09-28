@@ -1,0 +1,12 @@
+function negativePositiveNumbers(params) {
+    const actionsMap = {
+        true: "unshift",
+        false: "push"
+    };
+    let result = [];
+    for(let i = 0; i< params.length; i++) {
+        result[actionsMap[params[i] < 0]](params[i]);
+    }
+    return result;
+}
+console.log(negativePositiveNumbers([3, -2, 0, -1]));
