@@ -1,0 +1,7 @@
+function biggestElement(params) {
+    return Math.max(...params.reduce((acc, val) => Array.isArray(val) ? acc.concat(biggestElement(val)) : acc.concat(val), [])) 
+}
+console.log(biggestElement([
+    [20, 50, 10],
+    [8, 33, 145]
+]));
