@@ -1,0 +1,29 @@
+function addAndRemoveElements(array) {
+    const obj = {
+        add: "push",
+        remove: "pop"
+    };
+    let arr = [];
+    let start = 1;
+    for (let i = 0; i < array.length; i++) {
+        arr[obj[array[i]]](start++);
+    }
+    return arr.length ? arr.join("\n") : "Empty";
+}
+console.log(addAndRemoveElements(
+    [
+        "add",
+        "add",
+        "add",
+        "add",
+    ]
+));
+console.log(addAndRemoveElements(
+    [
+        "add",
+        "add",
+        "remove",
+        "add",
+        "add"
+    ]
+));
