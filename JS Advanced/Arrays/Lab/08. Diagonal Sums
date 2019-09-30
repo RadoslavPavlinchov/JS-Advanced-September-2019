@@ -1,0 +1,37 @@
+function diagonalSums(params) {
+    // let output = "";
+    // let sum = 0;
+    // for (let i = 0; i < params.length; i++) {
+    //     sum += params[i][i];
+    //     params[i].reverse();
+    // }
+    // output += `${sum} `;
+    // sum = 0;
+    // for (let j = 0; j < params.length; j++) {
+    //     sum += params[j][j];
+    // }
+    // return output += `${sum} `;
+
+    // let first = 0;
+    // let second = 0;
+    // for (let row = 0; row < params.length; row++) {
+    //     first += params[row][row];
+    //     second += params[row][params.length - 1 - row];
+    // }
+    // return [first, second].join(" ");
+
+    return params
+        .reduce(
+            (result, row, i, arr) => {
+                result[0] += row[i];
+                result[1] += row[arr.length - 1 - i];
+                return result;
+            }, [0, 0]
+        ).join(" ");
+}
+console.log(diagonalSums(
+    [
+        [3, 5, 17],
+        [-1, 7, 14],
+        [1, -8, 89]
+    ]));
