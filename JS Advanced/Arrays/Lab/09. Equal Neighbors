@@ -1,0 +1,22 @@
+function equalNeighbors(params) {
+    function intersect(a, b) {
+        return a.filter((element, index) => b[index] === element).length;
+    }
+    let result = 0;
+    for (let row = 0; row < params.length; row++) {
+        result += params[row].filter((x, i, arr) => x === arr[i + 1]).length;
+        if (row === params.length - 1) {
+            break;
+        }
+        result += intersect(params[row], params[row + 1]);
+
+    }
+    return result;
+}
+console.log(equalNeighbors(
+    [
+        ["2", "2", "5", "7", "4"],
+        ["4", "0", "5", "3", "4"],
+        ["2", "5", "5", "4", "2"],
+    ]
+    ));
