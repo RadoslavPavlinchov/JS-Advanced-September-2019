@@ -1,0 +1,18 @@
+function printEveryNElementFromAnArray(array) {
+    let result = "";
+    let step = array.splice(-1).join();
+    for (let i = 0; i < array.length; i += Number(`${step}`)) {
+        result += `${array[i]}\n`;
+    }
+    return result;
+}
+console.log(printEveryNElementFromAnArray(
+    [
+        "5",
+        "20",
+        "31",
+        "4",
+        "20",
+        "2"
+    ]
+));
