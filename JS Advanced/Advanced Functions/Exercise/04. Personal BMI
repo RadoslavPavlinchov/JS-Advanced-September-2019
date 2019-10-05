@@ -1,0 +1,36 @@
+function personalBMI(name, age, weight, height) {
+
+    function calc(weight, height) {
+        return Math.round(weight / (height / 100) ** 2);
+    }
+
+    function status(arg) {
+        if (arg < 18.5) {
+            return "underweight";
+        } else if (arg < 25) {
+            return "normal";
+        } else if (arg < 30) {
+            return "overweight";
+        } else if (arg >= 30) {
+            return "obese";
+        }
+    }
+
+    let bmi = {
+        name,
+        personalInfo: {
+            age,
+            weight,
+            height
+        },
+        BMI: Number(`${calc(weight, height)}`),
+        status: status(Number(calc(weight, height)))
+    };
+
+    if (bmi.status === "obese") {
+        bmi.recommendation = 'admission required';
+    }
+    return bmi;
+}
+console.log(personalBMI('Kotooshu', 33, 152, 203));
+//console.log(personalBMI('Honey Boo Boo', 9, 57, 137));
