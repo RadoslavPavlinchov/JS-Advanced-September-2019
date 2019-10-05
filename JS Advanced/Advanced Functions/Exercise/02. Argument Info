@@ -1,0 +1,22 @@
+function argumentInfo(...input) {
+    Object.entries(input.reduce((acc, cur) => {
+            let type = typeof cur;
+            console.log(`${type}: ${cur}`);
+            if (!acc[type]) {
+                acc[type] = 0;
+            }
+            acc[type]++;
+            return acc;
+        }, {}))
+        .sort((a, b) => b[1] - a[1])
+        .map(([t, c]) => `${t} = ${c}`)
+        .forEach(el => {
+            console.log(el);
+        });
+}
+argumentInfo("cat", 42, function () {
+    console.log("Hello world!");
+});
+// argumentInfo({
+//     name: 'bob'
+// }, 3.333, 9.999);
