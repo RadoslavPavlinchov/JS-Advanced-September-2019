@@ -1,0 +1,36 @@
+const solution = (function () {
+    function add(a, b) {
+        return [ a[0] + b[0], a[1] + b[1]];
+    }
+
+    function multiply(a, b) {
+        return a.map((e) => e * b);
+    }
+
+    function length(x) {
+        return Math.sqrt(Math.pow(x[0], 2) + (Math.pow(x[1], 2)));
+    }
+
+    function dot(a, b) {
+        return a[0] * b[0] + a[1] * b[1];
+    }
+
+    function cross(a, b) {
+        return (a[0] * b[1]) - (a[1] * b[0]);
+    }
+
+    return {
+        add,
+        multiply,
+        length,
+        dot,
+        cross
+    };
+}());
+
+console.log(solution.add([ 1, 1 ], [ 1, 0 ]));
+console.log(solution.multiply([ 3.5, -2 ], 2));
+console.log(solution.length([ 3, -4 ]));
+console.log(solution.dot([2, 3], [2, -1]));
+console.log(solution.cross([ 3, 7 ], [ 1, 0 ]));
+console.log(solution.add([5.43, -1], [1, 31]));
