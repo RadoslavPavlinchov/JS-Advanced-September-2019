@@ -1,0 +1,83 @@
+function breakfastRobot() {
+
+    const recipes = {
+        apple: {
+            carbohydrate: 1,
+            flavour: 2
+        },
+        lemonade: {
+            carbohydrate: 10,
+            flavour: 20
+        },
+        burger: {
+            carbohydrate: 5,
+            fat: 7,
+            flavour: 3
+        },
+        eggs: {
+            protein: 5,
+            fat: 1,
+            flavour: 1
+        },
+        turkey: {
+            protein: 10,
+            carbohydrate: 10,
+            fat: 10,
+            flavour: 10
+        }
+    };
+
+    let ingredients = {
+        protein: 0,
+        carbohydrate: 0,
+        fat: 0,
+        flavour: 0
+    };
+
+    return function processes(...params) {
+        let output = "";
+        for (let line of params) {
+            let [command, product, quantity] = line.split(" ");
+            quantity = Number(quantity);
+
+            if (command === "restock") {
+                ingredients[product] += quantity;
+                output = "Success";
+            }
+
+            if (command === "prepare") {
+                let currRecipe = recipes[product];
+
+                let missing = Object
+                    .entries(currRecipe)
+                    .find(([item, required]) => ingredients[item] < required * quantity);
+
+                if (missing) {
+                    output = `Error: not enough ${missing[0]} in stock`;
+                } else {
+                    output = "Success";
+                    for (const key in currRecipe) {
+                        if (ingredients[key]) {
+                            ingredients[key] -= currRecipe[key] * quantity;
+                        }
+                    }
+                }
+            }
+
+            if (command === "report") {
+                output = `protein=${ingredients.protein} carbohydrate=${ingredients.carbohydrate} fat=${ingredients.fat} flavour=${ingredients.flavour}`;
+            }
+        }
+        return output;
+    };
+}
+
+let result = breakfastRobot();
+
+console.log(result(
+    "restock carbohydrate 10",
+    "restock flavour 10",
+    "prepare apple 1",
+    "restock fat 10",
+    "prepare burger 1",
+    "report"));
