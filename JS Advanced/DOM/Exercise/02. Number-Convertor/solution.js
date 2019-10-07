@@ -1,9 +1,22 @@
 function solve() {
     const selectMenuTo = document.getElementById("selectMenuTo");
 
+    (function createSelectMenuOption() {
+        let binaryOption = document.createElement("option");
+        binaryOption.textContent = "Binary";
+        binaryOption.value = "binary";
+
+        let hexadecimalOption = document.createElement("option");
+        hexadecimalOption.textContent = "Hexadecimal";
+        hexadecimalOption.value = "hexadecimal";
+
+        selectMenuTo.appendChild(binaryOption);
+        selectMenuTo.appendChild(hexadecimalOption);
+    }());
+
     document
-    .querySelector("#container > button")
-    .addEventListener("click", convert);
+        .querySelector("#container > button")
+        .addEventListener("click", convert);
 
     function convert() {
         let number = Number(document.getElementById("input").value);
@@ -14,7 +27,6 @@ function solve() {
         } else if (selectMenuTo.value === "hexadecimal") {
             result = decimalToHexadecimal(number);
         }
-
         appendResult(result);
     }
 
@@ -29,17 +41,4 @@ function solve() {
     function decimalToHexadecimal(number) {
         return number.toString(16).toUpperCase();
     }
-
-     (function createSelectMenuOption() {
-        let binaryOption = document.createElement("option");
-        binaryOption.textContent = "Binary";
-        binaryOption.value = "binary";
-
-        let hexadecimalOption = document.createElement("option");
-        hexadecimalOption.textContent = "Hexadecimal";
-        hexadecimalOption.value = "hexadecimal";
-
-        selectMenuTo.appendChild(binaryOption);
-        selectMenuTo.appendChild(hexadecimalOption);
-    }());
 }
