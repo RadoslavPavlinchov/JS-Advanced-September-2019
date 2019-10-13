@@ -1,0 +1,22 @@
+function unity(params) {
+
+    class Rat {
+        constructor(name) {
+            this.name = name;
+            this.unitedRarts = [];
+        }
+        getRats() {
+            return [...this.unitedRarts];
+        }
+        unite(otherRat) {
+            if (otherRat instanceof Rat) {
+                this.unitedRarts.push(otherRat);
+            }
+        }
+        toString() {
+            return `${this.name}\n${this.unitedRarts
+                .map(r => `##${r}`)
+                .join('')}`;
+        }
+    }
+}
