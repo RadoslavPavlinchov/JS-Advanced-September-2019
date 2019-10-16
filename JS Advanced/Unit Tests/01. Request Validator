@@ -1,0 +1,26 @@
+function requestValidator(test) {
+    const methods = ['GET', 'POST', 'DELETE', 'CONNECT'];
+    const uriPattern = /(^[A-Za-z0-9.]+$)|\*/gm;
+    const version = ['HTTP/0.9', 'HTTP/1.0', 'HTTP/1.1', 'HTTP/2.0'];
+    const messagePattern = /^[^<>&'"\\]+$/gm;
+
+    if (!methods.includes(test.method)) {
+        throw new Error('Invalid request header: Invalid Method');
+    }
+    if (!test.uri || !test.uri.match(uriPattern)) {
+        throw new Error('Invalid request header: Invalid URI');
+    }
+    if (!version.includes(test.version)) {
+        throw new Error('Invalid request header: Invalid Version');
+    }
+    if ((!test.message && test.message !== '') || (!test.message.match(messagePattern) && test.message !== '')) {
+        throw new Error('Invalid request header: Invalid Message');
+    }
+    return test;
+}
+console.log(requestValidator({
+    method: 'GET',
+    uri: 'svn.public.catalog',
+    version: 'HTTP/1.1',
+    message: ''
+}));
