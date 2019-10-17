@@ -1,0 +1,111 @@
+let mathEnforcer = {
+    addFive: function (num) {
+        if (typeof (num) !== 'number') {
+            return undefined;
+        }
+        return num + 5;
+    },
+    subtractTen: function (num) {
+        if (typeof (num) !== 'number') {
+            return undefined;
+        }
+        return num - 10;
+    },
+    sum: function (num1, num2) {
+        if (typeof (num1) !== 'number' || typeof (num2) !== 'number') {
+            return undefined;
+        }
+        return num1 + num2;
+    }
+};
+
+//module.exports = mathEnforcer;
+
+//const mathEnforcer = require('./script');
+const expect = require('chai').expect;
+
+//addFive: function (num)
+// - Should return undefined with a string
+// - Should return 6 with number 1;
+// - Should return 4 with number -1;
+// - Should return 6.1 with number 1.1;
+
+//subtractTen: function (num) 
+// - Should return undefined with a string
+// - Should return -9 with number 1;
+// - Should return -11 with number -1;
+// - Should return -9.99 with number -0.01;
+
+describe('mathEnforcer.addFive', () => {
+    it('Should return undefined with a string', () => {
+        const expected = mathEnforcer.addFive('abc');
+        expect(expected).to.equal(undefined, 'Function did not return the correct result with a string as a parameter');
+    });
+    it('Should return correct result with a positive number as a parameter', () => {
+        const expected = mathEnforcer.addFive(1);
+        expect(expected).to.equal(6, 'Function did not return the correct result with the number 1 as a parameter');
+    });
+    it('Should return correct result with a negative number as a parameter', () => {
+        const expected = mathEnforcer.addFive(-1);
+        expect(expected).to.equal(4, 'Function did not return the correct result with -1 as a parameter');
+    });
+    it('Should return correct result with a floating-point number as a parameter', () => {
+        const expected = mathEnforcer.addFive(0.1);
+        expect(expected).to.closeTo(5.1, 0.01, 'Function did not return the correct result with 1.1 as a parameter');
+    });
+
+    describe('mathEnforcer.subtractTen', () => {
+        it('Should return undefined with a string', () => {
+            const expected = mathEnforcer.subtractTen('abc');
+            expect(expected).to.equal(undefined, 'Function did not return the correct result with a string as a parameter');
+        });
+        it('Should return correct result with a positive number as a parameter', () => {
+            const expected = mathEnforcer.subtractTen(1);
+            expect(expected).to.equal(-9, 'Function did not return the correct result with the number 1 as a parameter');
+        });
+        it('Should return correct result with a negative number as a parameter', () => {
+            const expected = mathEnforcer.subtractTen(-1);
+            expect(expected).to.equal(-11, 'Function did not return the correct result with -1 as a parameter');
+        });
+        it('Should return correct result with a floating-point number as a parameter', () => {
+            const expected = mathEnforcer.subtractTen(0.1);
+            expect(expected).to.closeTo(-9.9, 0.01, 'Function did not return the correct result with 1.1 as a parameter');
+        });
+    });
+
+    //sum: function (num1, num2)
+    // - Should return undefined with string passed as a first parameter
+    // - Should return undefined with string passed as a second parameter
+    // - Should return 0.3 with 0.1 + 0.2
+    // - Should return 2 with 1 + 1
+    // - Should return 0 with -1 + 1
+    // - Should return -2 with -1 + -1
+
+    describe('mathEnforcer.sum', () => {
+        it('Should return undefined with string passed as a first parameter', () => {
+            const expected = mathEnforcer.sum('abc', 1);
+            expect(expected).to.equal(undefined, 'Function did not return the correct result with a string passed as a first parameter');
+        });
+        it('Should return undefined with string passed as a second parameter', () => {
+            const expected = mathEnforcer.sum(1, 'abc');
+            expect(expected).to.equal(undefined, 'Function did not return the correct result with a string passed as a first parameter');
+        });
+        it('Should return correct result with floating-point numbers passed as parameters', () => {
+            const expected = mathEnforcer.sum(0.1, 0.2);
+            expect(expected).to.closeTo(0.3, 0.01, 'Function did not return the correct result with 0.1 and 0.2 passed as parameters');
+        });
+        it('Should return correct result with two possitive numbers passed as a parameters', () => {
+            const expected = mathEnforcer.sum(1, 1);
+            expect(expected).to.equal(2, 'Function did not return the correct result with 1 and 1 passed as a parameters');
+        });
+        it('Should return correct result with one negative number passed as a parameter', () => {
+            const expected = mathEnforcer.sum(-1, 1);
+            expect(expected).to.equal(0, 'Function did not return the correct result with -1 and 1 passed as a parameters');
+        });
+        it('Should return correct result with two negative numbers passed as a parameters', () => {
+            const expected = mathEnforcer.sum(-1, -1);
+            expect(expected).to.equal(-2, 'Function did not return the correct result with -1 and -1 passed as a parameters');
+        });
+    });
+
+});
