@@ -1,0 +1,42 @@
+function lookupChar(string, index) {
+    if (typeof (string) !== 'string' || !Number.isInteger(index)) {
+        return undefined;
+    }
+    if (string.length <= index || index < 0) {
+        return 'Incorrect index';
+    }
+    return string.charAt(index);
+}
+
+module.exports = lookupChar;
+
+const lookupChar = require('./script');
+const expect = require('chai').expect;
+
+// If first param is different than a string, should return undefined.
+// If second param is not an integer, should return undefined.
+// If index is greater than the sting lenght or less than
+// if index is correct, should return charAt
+
+describe('lookupChar', () => {
+    it('Should return undefined with number as a first parameter', () => {
+        const expected = lookupChar(1, 1);
+        expect(expected).to.equal(undefined, 'Function did not return the correct result with a number as first parameter.');
+    });
+    it('Should return undefined with floating-point number as a second parameter', () => {
+        const expected = lookupChar('abc', 1.1);
+        expect(expected).to.equal(undefined, 'Function did not return the correct result with a floating-point number as second parameter.');
+    });
+    it('Should return Incorrect index with index greater than the sting length', () => {
+        const expected = lookupChar('abc', 3);
+        expect(expected).to.equal('Incorrect index', 'Function did not return the correct result with an index greater than the string length.');
+    });
+    it('Should return Incorrect index with index less than the sting length', () => {
+        const expected = lookupChar('abc', -1);
+        expect(expected).to.equal('Incorrect index', 'Function did not return the correct result with an index less than the string length.');
+    });
+    it('Should return a char with a correct index', () => {
+        const expected = lookupChar('abc', 1);
+        expect(expected).to.equal('b', 'Function return the correct result with a correct index.');
+    });
+});
