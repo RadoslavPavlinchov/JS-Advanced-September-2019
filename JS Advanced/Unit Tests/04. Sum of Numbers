@@ -1,0 +1,26 @@
+function sum(arr) {
+    let sum = 0;
+    for (num of arr)
+        sum += Number(num);
+    return sum;
+}
+
+// module.exports = sum;
+
+// const sum = require('./script');
+// const expect = require('chai').expect;
+
+describe('sum', () => {
+    it('Take an array of numbers as argument', () => { 
+        let expected = sum([1, 1]);
+        expect(expected).to.equal(2);
+    });
+    it('Return the sum of the values of all elements inside the array', () => { 
+        let expected = sum([1, 1, 1]);
+        expect(expected).to.equal(3);
+    });
+    it('Return the sum of the values of all elements inside the array', () => { 
+        let expected = sum([1, 1, -1]);
+        expect(expected).to.equal(1);
+    });
+});
