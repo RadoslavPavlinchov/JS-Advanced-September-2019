@@ -1,0 +1,62 @@
+function isSymmetric(arr) {
+    if (!Array.isArray(arr)){
+        return false;
+    }
+    let reversed = arr.slice(0).reverse();
+    let equal = (JSON.stringify(arr) == JSON.stringify(reversed));
+    console.log(equal);
+    return equal;
+}
+
+// module.exports = isSymmetric;
+
+// const isSymmetric = require('./script');
+// const expect = require('chai').expect;
+
+describe('isSymmetric test', () => {
+    it('Take a number as argument', () => { 
+        let expected = isSymmetric(2);
+        expect(expected).to.equal(false);
+    });
+    it('Take three numbers as argument', () => { 
+        let expected = isSymmetric(2, 1, 2);
+        expect(expected).to.equal(false);
+    });
+    it('Take an object as argument', () => { 
+        let expected = isSymmetric({name: 1});
+        expect(expected).to.equal(false);
+    });
+    it('Take an array with one string as argument', () => { 
+        let expected = isSymmetric(['abc']);
+        expect(expected).to.equal(true);
+    });
+    it('Take an empty array as argument', () => { 
+        let expected = isSymmetric([]);
+        expect(expected).to.equal(true);
+    });
+    it('Take an array with one object as argument', () => { 
+        let expected = isSymmetric([{'abc': 'abc'}]);
+        expect(expected).to.equal(true);
+    });
+    it('Take an array with three strings as argument', () => { 
+        let expected = isSymmetric(['a', 'b', 'c']);
+        expect(expected).to.equal(false);
+    });
+    it('Take an array with three 1 as argument', () => { 
+        let expected = isSymmetric([1, 1, 1]);
+        expect(expected).to.equal(true);
+    });
+    it('Take an array [1, 2, 3, 3, 2, 1] as argument', () => { 
+        let expected = isSymmetric([1, 2, 3, 3, 2, 1]);
+        expect(expected).to.equal(true);
+    });
+    it('Take an array [1, 2, 3, 3, 2, 1] as argument', () => { 
+        let expected = isSymmetric([1, 2, 3, 3, 2, 1]);
+        expect(expected).to.equal(true);
+    });
+    it('Take an array with one object and two numbers as argument', () => { 
+        let expected = isSymmetric([{'abc': 'abc'}, 1, 2]);
+        expect(expected).to.equal(false);
+    });
+
+});
