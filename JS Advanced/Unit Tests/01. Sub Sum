@@ -13,4 +13,23 @@ function sum(array, startIndex, endIndex) {
     .map(Number)
     .reduce((acc, curr) => acc + curr, 0);
 }
-console.log(sum([10, 'twenty', 30, 40], 0, 2));
+module.exports = sum;
+
+//Tests
+const sum = require('./script');
+const expect = require('chai').expect;
+
+describe('sum testing', () => {
+    it('If the first element is not an array, return NaN', () => {
+        let expected = sum('a', 1, 2);
+        expect(isNaN(expected)).to.equal(true);
+    });
+    it('If the start index is less than zero, consider its value to be a zero', () => {
+        let expected = sum([1, 1], -1, 1);
+        expect(expected).to.equal(2);
+    });
+    it('If the end index is outside the bounds of the array, assume it points to the last index of the array', () => {
+        let expected = sum([1, 1], 0, 2);
+        expect(expected).to.equal(2);
+    });
+});
