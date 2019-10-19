@@ -1,0 +1,136 @@
+class PaymentPackage {
+    constructor(name, value) {
+        this.name = name;
+        this.value = value;
+        this.VAT = 20; // Default value
+        this.active = true; // Default value
+    }
+    get name() {
+        return this._name;
+    }
+    set name(newValue) {
+        if (typeof newValue !== 'string') {
+            throw new Error('Name must be a non-empty string');
+        }
+        if (newValue.length === 0) {
+            throw new Error('Name must be a non-empty string');
+        }
+        this._name = newValue;
+    }
+    get value() {
+        return this._value;
+    }
+    set value(newValue) {
+        if (typeof newValue !== 'number') {
+            throw new Error('Value must be a non-negative number');
+        }
+        if (newValue < 0) {
+            throw new Error('Value must be a non-negative number');
+        }
+        this._value = newValue;
+    }
+    get VAT() {
+        return this._VAT;
+    }
+    set VAT(newValue) {
+        if (typeof newValue !== 'number') {
+            throw new Error('VAT must be a non-negative number');
+        }
+        if (newValue < 0) {
+            throw new Error('VAT must be a non-negative number');
+        }
+        this._VAT = newValue;
+    }
+    get active() {
+        return this._active;
+    }
+    set active(newValue) {
+        if (typeof newValue !== 'boolean') {
+            throw new Error('Active status must be a boolean');
+        }
+        this._active = newValue;
+    }
+    toString() {
+        const output = [
+            `Package: ${this.name}` + (this.active === false ? ' (inactive)' : ''),
+            `- Value (excl. VAT): ${this.value}`,
+            `- Value (VAT ${this.VAT}%): ${this.value * (1 + this.VAT / 100)}`
+        ];
+        return output.join('\n');
+    }
+}
+
+// module.exports = PaymentPackage;
+
+// const PaymentPackage = require('./script');
+// const expect = require('chai').expect;
+
+describe('PaymentPackage test', () => {
+
+    let instance;
+    beforeEach(() => {
+        instance = new PaymentPackage('a', 1);
+    });
+
+    describe('intance (string, number)', () => {
+        it('instance with a, 1', () => {
+            instance = new PaymentPackage('a', 1);
+            const test = instance.toString();
+            expect(test).to.equal(`Package: a\n- Value (excl. VAT): 1\n- Value (VAT 20%): 1.2`);
+        });
+        it('instanceOf check', () => {
+            instance = new PaymentPackage('Rado', 10);
+            expect(instance).to.be.instanceOf(PaymentPackage);
+        });  
+        it('instance check name and value', () => {
+            instance = new PaymentPackage('Rado', 10);
+            const test1 = instance.name;
+            const test2 = instance.value;
+            expect(test1).to.equal('Rado');
+            expect(test2).to.equal(10);
+        }); 
+        it('instance with string and 0', () => {
+            instance = new PaymentPackage('Partnership Fee', 0);
+            const test = instance.toString();
+            expect(test).to.equal(`Package: Partnership Fee\n- Value (excl. VAT): 0\n- Value (VAT 20%): 0`);
+        });
+        it('instance with wrong name', () => {
+            expect(() => {new PaymentPackage(10, 10);}).to.throw('Name must be a non-empty string');
+            expect(() => {new PaymentPackage('', 10);}).to.throw('Name must be a non-empty string');
+            expect(instance.name = 'Radooo').to.equal('Radooo');
+        }); 
+        it('instance with wrong value', () => {
+            expect(() => {new PaymentPackage('Rado', -10);}).to.throw('Value must be a non-negative number');
+            expect(() => {new PaymentPackage('Rado', '-10');}).to.throw('Value must be a non-negative number');
+            expect(instance.value = 100).to.equal(100);
+        });
+        it('instance with wrong VAT', () => {
+            expect(() => {instance.VAT = -1;}).to.throw('VAT must be a non-negative number');
+            expect(() => {instance.VAT = 'VAT';}).to.throw('VAT must be a non-negative number');
+            expect(instance.VAT = 100).to.equal(100);
+        });
+        it('instance with wrong active', () => {
+            expect(() => {instance.active = -1;}).to.throw('Active status must be a boolean');
+            expect(instance.active).to.equal(true);
+        });
+        it('check toString()', () => {
+            instance = new PaymentPackage('Partnership Fee', 7000);
+            const test = instance.toString();
+            expect(test).to.equal(`Package: Partnership Fee\n- Value (excl. VAT): 7000\n- Value (VAT 20%): 8400`);
+        });
+        it('change active', () => {
+            instance = new PaymentPackage('Partnership Fee', 7000);
+            instance.active = false;
+            const test = instance.toString();
+            expect(test).to.equal(`Package: Partnership Fee (inactive)\n- Value (excl. VAT): 7000\n- Value (VAT 20%): 8400`);
+        });
+        it('change VAT', () => {
+            instance = new PaymentPackage('Partnership Fee', 7000);
+            instance.VAT = 0;
+            const test = instance.toString();
+            expect(test).to.equal(`Package: Partnership Fee\n- Value (excl. VAT): 7000\n- Value (VAT 0%): 7000`);
+        });
+        
+    });
+
+});
