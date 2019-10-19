@@ -1,0 +1,163 @@
+class StringBuilder {
+    constructor(string) {
+        if (string !== undefined) {
+            StringBuilder._vrfyParam(string);
+            this._stringArray = Array.from(string);
+        } else {
+            this._stringArray = [];
+        }
+    }
+    append(string) {
+        StringBuilder._vrfyParam(string);
+        for (let i = 0; i < string.length; i++) {
+            this._stringArray.push(string[i]);
+        }
+    }
+    prepend(string) {
+        StringBuilder._vrfyParam(string);
+        for (let i = string.length - 1; i >= 0; i--) {
+            this._stringArray.unshift(string[i]);
+        }
+    }
+    insertAt(string, startIndex) {
+        StringBuilder._vrfyParam(string);
+        this._stringArray.splice(startIndex, 0, ...string);
+    }
+    remove(startIndex, length) {
+        this._stringArray.splice(startIndex, length);
+    }
+    static _vrfyParam(param) {
+        if (typeof param !== 'string') throw new TypeError('Argument must be string');
+    }
+    toString() {
+        return this._stringArray.join('');
+    }
+}
+
+// module.exports = StringBuilder;
+
+// const StringBuilder = require('./script');
+// const expect = require('chai').expect;
+
+describe('StringBuilder tests', () => {
+    let str;
+    beforeEach(() => {
+        str = new StringBuilder();
+    });
+
+    describe('Can be instantiated with a passed in string argument or without anything', () => {
+        it('instantiated with hi', () => {
+            str = new StringBuilder('hi');
+            const test = str.toString();
+            expect(test).to.equal('hi');
+        });
+        it('instantiated with nothing', () => {
+            str = new StringBuilder();
+            const test = str.toString();
+            expect(test).to.equal('');
+        });
+    });
+
+    describe('append(string)', () => {
+        it('append ",there"', () => {
+            str = new StringBuilder('hello');
+            str.append(', there');
+            const test = str.toString();
+            expect(test).to.equal('hello, there');
+        });
+        it('append "...is empty" on empty instance', () => {
+            str = new StringBuilder();
+            str.append('...is empty');
+            const test = str.toString();
+            expect(test).to.equal('...is empty');
+        });
+    });
+
+    describe('prepend(string)', () => {
+        it('prepend "Hello"', () => {
+            str = new StringBuilder(', there');
+            str.prepend('Hello');
+            const test = str.toString();
+            expect(test).to.equal('Hello, there');
+        });
+        it('append "Hello..." on empty instance', () => {
+            str = new StringBuilder();
+            str.prepend('Hello...');
+            const test = str.toString();
+            expect(test).to.equal('Hello...');
+        });
+    });
+
+    describe('insertAt(string, index)', () => {
+        it('insertAt "Hello"', () => {
+            str = new StringBuilder(',there');
+            str.insertAt('Hello', 0);
+            const test = str.toString();
+            expect(test).to.equal('Hello,there');
+        });
+        it('insertAt on empty instance', () => {
+            str = new StringBuilder();
+            str.insertAt('Hello...', -1);
+            const test = str.toString();
+            expect(test).to.equal('Hello...');
+        });
+    });
+
+    describe('remove(startIndex, length)', () => {
+        it('remove(0, 1) "Hello"', () => {
+            str = new StringBuilder('Hello');
+            str.remove(0, 1);
+            const test = str.toString();
+            expect(test).to.equal('ello');
+        });
+        it('remove(0, 10) "Hello"', () => {
+            str = new StringBuilder();
+            str.remove(0, 10);
+            const test = str.toString();
+            expect(test).to.equal('');
+        });
+    });
+
+    describe('toString()', () => {
+        it('Hello there Tom', () => {
+            str = new StringBuilder('Hello there Tom');
+            const test = str.toString();
+            expect(test).to.equal('Hello there Tom');
+        });
+    });
+
+    describe('arguments should be strings', () => {
+        it('argument', () => {
+            const test = str.append;
+            expect(() => {test({});}).to.throw('Argument must be string');
+        });
+    });
+
+    describe('Check instanceOf', () => {
+        it('instanceOf', () => {
+            str = new StringBuilder('Hello');
+            expect(str).to.be.instanceOf(StringBuilder);
+        });
+    });
+
+    describe('Check methods', () => {
+        it('allMethods', () => {
+            str = new StringBuilder('Hello');
+            expect(str.append).to.be.a('function');
+            expect(str.prepend).to.be.a('function');
+            expect(str.insertAt).to.be.a('function');
+            expect(str.remove).to.be.a('function');
+            expect(str.toString).to.be.a('function');
+        });
+    });
+
+    describe('Check methods', () => {
+        it('allMethods', () => {
+            expect(StringBuilder._vrfyParam('hi')).to.equal(undefined);
+            expect(() => {StringBuilder._vrfyParam({});}).to.throw('Argument must be string');
+            str = new StringBuilder('Hello');
+            expect(str).to.be.an('object');
+        });
+    });
+
+});
