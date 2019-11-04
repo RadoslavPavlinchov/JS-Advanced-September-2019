@@ -1,0 +1,21 @@
+function solve(data) {
+    const commands = {
+        add: function (arr, str) {
+            return [...arr, str]
+        },
+        remove: function (arr, str) {
+            return arr.filter(x => x !== str)
+        },
+        print: function (arr, _) {
+            console.log(arr.join(','))
+            return arr
+        },
+    }
+
+    let output = []
+    return data.map(x => {
+        const [command, string] = x.split(' ')
+        output = commands[command](output, string)
+    })
+}
+solve(['add hello', 'add again', 'remove hello', 'add again', 'print'])
