@@ -1,0 +1,19 @@
+function solve(data) {
+    function area() {
+        return this.width * this.height
+    }
+
+    function compareTo(obj) {
+        return obj.area() - this.area() || obj.width - this.width
+    }
+    return data
+        .map(x => ({
+            width: x[0],
+            height: x[1],
+            area,
+            compareTo,
+        }))
+        .sort((a, b) => a.compareTo(b))
+}
+console.log(solve([[10, 5], [5, 12]]))
+console.log(solve([[10, 5], [3, 20], [5, 12]]))
