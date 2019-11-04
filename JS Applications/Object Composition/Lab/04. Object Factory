@@ -1,0 +1,9 @@
+function solve(data) {
+    return JSON.parse(data).reduce((a, b) => {
+        Object.assign(a, b)
+        return a
+    }, {})
+}
+console.log(
+    solve(`[{"canMove": true},{"canMove":true, "doors": 4}, {"capacity": 5}]`)
+)
