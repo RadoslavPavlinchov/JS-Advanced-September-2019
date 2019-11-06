@@ -1,0 +1,43 @@
+function toStringExtension() {
+    class Person {
+        name;
+        email;
+        constructor(n, e) {
+            this.name = n;
+            this.email = e;
+        }
+        toString() {
+            return `Person (name: ${this.name}, email: ${this.email})`;
+        }
+    }
+    
+    class Teacher extends Person {
+        subject;
+        constructor(n, e, s) {
+            super(n, e);
+            this.subject = s;
+        }
+        toString() {
+            super.toString();
+            return `Teacher (name: ${this.name}, email: ${this.email}, subject: ${this.subject})`;
+        }
+    }
+
+    class Student extends Person {
+        course;
+        constructor(n, e, c) {
+            super(n, e);
+            this.course = c;
+        }
+        toString() {
+            super.toString();
+            return `Student (name: ${this.name}, email: ${this.email}, course: ${this.course})`;
+        }
+    }
+
+    return {
+        Person,
+        Teacher,
+        Student
+    }
+}
