@@ -5,24 +5,18 @@ function getInfo() {
     const url = `https://judgetests.firebaseio.com/businfo/${stopId}.json`;
 
     fetch(url)
-        .then(res => {
-            if (!res.ok) {
-                stopName.textContent = 'Error';
-                throw new Error(
-                    `Unable to find a bus stop with this Stop ID: ${stopId}`
-                );
-            }
-            return res.json();
-        })
+        .then(res => res.json())
         .then(data => {
             const { name, buses } = data;
             stopName.textContent = name;
-            Object.entries(buses).forEach(([id, time]) => {
-                const li = document.createElement('li');
-                li.textContent = `Bus ${id} arrives in ${time}`;
-                busesList.appendChild(li);
-            });
-        });
+            Object.entries(buses)
+                .forEach(([busId, busTime]) => {
+                    const li = document.createElement('li');
+                    li.textContent = `Bus ${busId} arrives in ${busTime}`;
+                    busesList.appendChild(li);
+                });
+        })
+        .catch(err => stopName.textContent = 'Error');
 
     stopName.textContent = '';
     busesList.innerHTML = '';
