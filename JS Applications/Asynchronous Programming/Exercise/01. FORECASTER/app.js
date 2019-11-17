@@ -38,8 +38,8 @@ function attachEvents() {
     }
 
     function generateWeatherInfo(today, upcoming) {
-
         elements.$current().innerHTML = '';
+        elements.$current().innerHTML = '<div class="label">Current conditions</div>';
 
         elements.$forecast().style.display = 'block';
 
@@ -69,6 +69,7 @@ function attachEvents() {
 
         upcoming.forecast.forEach(o => {
             elements.$upcoming().innerHTML = '';
+            elements.$upcoming().innerHTML = '<div class="label">Three-day forecast</div>';
 
             const { condition, low, high } = o;
             const symbol = getNormalizedSymbol(o.condition);
