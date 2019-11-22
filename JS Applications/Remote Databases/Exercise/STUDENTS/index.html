@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <title>Students</title>
     <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./requester.js"></script>
+    <script type="module" src="./app.js"></script>
 </head>
 
 <body>
+    <button id="load-students">Load all students</button>
+
     <table id="results">
         <thead>
             <tr>
@@ -18,9 +22,22 @@
                 <th>Grade</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="all-students"></tbody>
     </table>
-    <script src="./app.js"></script>
+    <form>
+        <h3>Create Student</h3>
+        <label>ID</label>
+        <input type="number" id="id" placeholder="ID...">
+        <label>First name</label>
+        <input type="text" id="firstName" placeholder="First name...">
+        <label>Last name</label>
+        <input type="text" id="lastName" placeholder="Last name...">
+        <label>Faculty number</label>
+        <input type="text" id="facultyNumber" placeholder="Faculty number...">
+        <label>Grade</label>
+        <input type="text" id="grade" placeholder="Grade...">
+        <button id="create-student">Create</button>
+    </form>
 </body>
 
 </html>
