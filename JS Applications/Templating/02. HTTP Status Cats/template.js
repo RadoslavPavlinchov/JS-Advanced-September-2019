@@ -1,21 +1,28 @@
-function toggle(e) {
-    e.textContent = e.textContent === 'Show status code' ? 'Hide status code' : 'Show status code'
-    const statusDiv = e.parentNode.getElementsByClassName('status')[0]
-    statusDiv.style.display = statusDiv.style.display === 'none' ? 'inline' : 'none';
+const html = {
+    allCats: () => document.getElementById('allCats')
+};
+
+const actions = {
+    showBtn: showInfo
+};
+
+function showInfo(target) {
+    const statusDiv = target.closest('li').querySelector('.status');
+    statusDiv.style.display = statusDiv.style.display === 'none' ? 'block' : 'none';
 }
 
-(() => {
-    renderCatTemplate();
-
-    async function renderCatTemplate() {
-        const source = await fetch('http://127.0.0.1:5500/JS%20Applications/Templating/Exercise/02.%20HTTP%20Status%20Cats/templates/all-cats.hbs')
-            .then(res => res.text())
-
+fetch('./all-cats.hbs')
+    .then(res => res.text())
+    .then(source => {
         const template = Handlebars.compile(source);
-        const context = { cats: window.cats };
-        const catsHTML = template(context);
+        html.allCats().innerHTML = template({ cats: window.cats });
+    })
 
-        document.getElementById('allCats')
-            .innerHTML = catsHTML;
+document.addEventListener('click', handler);
+
+function handler(e) {
+    if (typeof actions[e.target.className] === 'function') {
+        actions[e.target.className](e.target);
     }
-})()
+}
+
