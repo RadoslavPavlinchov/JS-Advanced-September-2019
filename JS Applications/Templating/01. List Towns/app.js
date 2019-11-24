@@ -1,16 +1,27 @@
-(function () {
-    document.getElementById('btnLoadTowns')
-        .addEventListener('click', async function () {
-            const towns = document.getElementById('towns')
-                .value.split(', ');
+const html = {
+    towns: () => document.getElementById('towns'),
+    root: () => document.getElementById('root')
+};
 
-            const source = await fetch('http://127.0.0.1:5500/JS%20Applications/Templating/Exercise/01.%20List%20Towns/towns.hbs')
-                .then(res => res.text())
-            const template = Handlebars.compile(source);
-            const context = { towns }
-            const townsHTML = template(context);
+const actions = { btnLoadTowns: getInput };
 
-            document.getElementById('root')
-                .innerHTML = townsHTML;
-        })
-}())
+async function getInput() {
+    const towns = html.towns()
+        .value
+        .split(', ');
+
+    const source = await fetch('towns.hbs')
+        .then(res => res.text());
+    const template = Handlebars.compile(source);
+    html.root().innerHTML = template({ towns });
+    html.towns().value = '';
+}
+
+document.addEventListener('click', handler);
+
+function handler(e) {
+    if (typeof actions[e.target.id] === 'function') {
+        e.preventDefault();
+        actions[e.target.id]();
+    }
+}
